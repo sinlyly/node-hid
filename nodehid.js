@@ -75,13 +75,15 @@ function HID() {
             process.nextTick(self.resume.bind(self) );
     });
 }
+
+
 //Inherit prototype methods
 util.inherits(HID, EventEmitter);
 //Don't inherit from `binding.HID`; that's done above already!
 
 HID.prototype.close = function close() {
     this._closing = true;
-    this.removeAllListeners();
+    this.removeAllListeners(['newListener']);
     this._raw.close();
     this._closed = true;
 };
@@ -110,7 +112,8 @@ HID.prototype.resume = function resume() {
                 //Emit error and pause reading
                 self._paused = true;
                 if(!self._closing)
-                    self.emit("error", err);
+                    self.close(); //update_by_sin
+                    //self.emit("error", err);
                 //else ignore any errors if I'm closing the device
             }
             else

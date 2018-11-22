@@ -202,8 +202,9 @@ HID::readResultsToJSCallbackArguments(ReceiveIOCB* iocb, Local<Value> argv[])
 
     Local<Object> buf = Nan::NewBuffer(message.size()).ToLocalChecked();
     char* data = Buffer::Data(buf);
-    
+    char* data_e = Buffer::Data(buf);
     int j = 0;
+
     for (vector<unsigned char>::const_iterator k = message.begin(); k != message.end(); k++) {
       data[j++] = *k;
     }

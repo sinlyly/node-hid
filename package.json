@@ -2,7 +2,7 @@
   "_args": [
     [
       "node-hid@0.7.3",
-      "/Users/liuy/Documents/APP/project/sgm-offline-electron/app"
+      "D:\\project\\sgm-offline-electron\\app"
     ]
   ],
   "_from": "node-hid@0.7.3",
@@ -26,7 +26,7 @@
   ],
   "_resolved": "https://registry.npmjs.org/node-hid/-/node-hid-0.7.3.tgz",
   "_spec": "0.7.3",
-  "_where": "/Users/liuy/Documents/APP/project/sgm-offline-electron/app",
+  "_where": "D:\\project\\sgm-offline-electron\\app",
   "author": {
     "name": "Hans Hübner",
     "email": "hans.huebner@gmail.com",
