@@ -13,7 +13,6 @@
 * [Examples](#examples)
 * [Usage](#usage)
    * [List all HID devices connected](#list-all-hid-devices-connected)
-     * [Cost of HID.devices() and new HID.HID()](#cost-of-hiddevices-and-new-hidhid-for-detecting-device-plugunplug)
    * [Opening a device](#opening-a-device)
    * [Picking a device from the device list](#picking-a-device-from-the-device-list)
    * [Reading from a device](#reading-from-a-device)
@@ -170,11 +169,6 @@ HID.devices();
     <and more>
 ```
 
-#### Cost of `HID.devices()` and `new HID.HID()` for detecting device plug/unplug
-Both `HID.devices()` and `new HID.HID()` are relatively costly, each causing a USB (and potentially Bluetooth) enumeration. This takes time and OS resources. Doing either can slow down the read/write that you do in parallel with a device, and cause other USB devices to slow down too. This is how USB works.
-
-If you are polling `HID.devices()` or doing repeated `new HID.HID(vid,pid)` to detect device plug / unplug, consider instead using [node-usb-detection](https://github.com/MadLittleMods/node-usb-detection). `node-usb-detection` uses OS-specific, non-bus enumeration ways to detect device plug / unplug.
-
 ### Opening a device
 
 Before a device can be read from or written to, it must be opened.
@@ -193,13 +187,6 @@ var device = new HID.HID(vid,pid);
 
 The `device` variable will contain a handle to the device.
 If an error occurs opening the device, an exception will be thrown.
-
-A `node-hid` device is an `EventEmitter`.
-While it shares some method names and usage patterns with
-`Readable` and `Writable` streams, it is not a stream and the semantics vary.
-For example, `device.write` does not take encoding or callback args and
-`device.pause` does not do the same thing as `readable.pause`.
-There is also no `pipe` method.
 
 ### Picking a device from the device list
 If you need to filter down the `HID.devices()` list, you can use
@@ -243,8 +230,7 @@ Notes:
 - Reads via `device.on("data")` are asynchronous
 - Reads via `device.getFeatureReport()` are synchronous
 - To remove an event handler, close the device with `device.close()`
-- When there is not yet a data handler or no data handler exists,
-   data is not read at all -- there is no buffer.
+
 
 ### Writing to a device
 
@@ -304,9 +290,7 @@ the first byte of the array to `write()` should be the reportId.
 
 ### `device.pause()`
 
-- Pauses reading and the emission of `data` events.  
-This means the underlying device is _silenced_ until resumption --
-it is not like pausing a stream, where data continues to accumulate.
+- Pauses reading and the emission of `data` events.
 
 ### `device.resume()`
 
